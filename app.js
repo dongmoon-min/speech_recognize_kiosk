@@ -3,6 +3,8 @@ var fs = require ('fs');
 
 var app = express ();
 
+app.use(express.static('pictures'));
+
 app.get ('/', function (req, res) {
     fs.readFile ('./views/index.html', function (error, data) {
         if (error) {
@@ -15,6 +17,6 @@ app.get ('/', function (req, res) {
     })
 });
 
-app.listen (80, function () {
+app.listen (8080, function () {
     console.log ('Connected');
 });
