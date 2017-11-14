@@ -5,19 +5,24 @@
     <meta charset="utf-8">
     <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
     <title>
-      Chrome Browser
+      Speech Recognition Kiosk
     </title>
     <style>
       #info {
           font-size: 20px;
+          text-align: center;
           }
       #div_start {
-      float: right;
+      text-align:center;
+      padding: 20px;
       }
       #headline {
       text-decoration: none
       }
       #results {
+      display:none;
+      }
+      #summary {
       font-size: 14px;
       font-weight: bold;
       border: 1px solid #ddd;
@@ -67,7 +72,7 @@
     <div class="browser-landing" id="main">
       <div class="compact marquee-stacked" id="marquee">
         <div class="marquee-copy">
-          <h1>
+          <h1 align="center">
             Speech Recognition Kiosk Demonstration
           </h1>
         </div>
@@ -106,10 +111,7 @@
           </p>
         </div>
         <div id="div_start">
-
-          <!-- TODO: choose button images -->
-
-          <button class="button" id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
+        <button class="button" id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
           src="mute.png"></button>
         </div>
         
@@ -122,7 +124,13 @@
           <p><span>아메리카노: </span><span id="americano">0</span></p>
           <p><span>라떼: </span><span id="latte">0</span></p>
           <p><span>녹차: </span><span id="greentea">0</span></p>
+          <br><br>
+          <p><span>total Cost: </span><span id="cost">0</span></p>
         </div>
+
+<!--*********************************************************-->
+<!--********************* Main Function *********************-->
+<!--*********************************************************-->
 
         <script>
           function alertFunction() {
@@ -132,6 +140,7 @@
                 var n = Number (document.getElementById('americano').innerHTML);
                 n += 1;
                 document.getElementById('americano').innerHTML = n;
+                totalCost ();
               }
             }
             else if (x === '라떼') {
@@ -139,6 +148,7 @@
                 var n = Number (document.getElementById('latte').innerHTML);
                 n += 1;
                 document.getElementById('latte').innerHTML = n;
+                totalCost ();
               }
             }
             else if (x === '녹차') {
@@ -146,6 +156,7 @@
                 var n = Number (document.getElementById('greentea').innerHTML);
                 n += 1;
                 document.getElementById('greentea').innerHTML = n;
+                totalCost ();
               }
             }
             else {
@@ -153,7 +164,20 @@
             }
             return;
           }
+
+          function totalCost () {
+            var americano = Number (document.getElementById('americano').innerHTML);
+            var latte = Number (document.getElementById('latte').innerHTML);
+            var greentea = Number (document.getElementById('greentea').innerHTML);
+            document.getElementById('cost').innerHTML = 1800*americano + 2300*latte + 2500*greentea;
+            return;
+          }
+
         </script>
+
+<!--*********************************************************-->
+<!--******************** End of Function ********************-->
+<!--*********************************************************-->
 
         <div class="compact marquee" id="div_language">
           <select id="select_language" onchange="updateCountry()">
@@ -330,6 +354,7 @@ if (!('webkitSpeechRecognition' in window)) {
     recognizing = true;
     showInfo('info_speak_now');
     start_img.src = 'mic.png';
+    //setTimeout (recognition.onend(), 3000);
   };
 
   recognition.onerror = function(event) {
