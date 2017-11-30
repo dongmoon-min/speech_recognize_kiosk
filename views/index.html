@@ -128,11 +128,18 @@
           <p><span>total Cost: </span><span id="cost">0</span></p>
         </div>
 
+        <button  onclick="submit(event)">결제하기</button>
+
 <!--*********************************************************-->
 <!--********************* Main Function *********************-->
 <!--*********************************************************-->
 
         <script>
+          function submit(event) {
+            var x = document.getElementById('cost').innerHTML;
+            alart (x+'원 결제 바랍니다.');
+          }
+
           function alertFunction() {
             var x = document.getElementById('final_span').innerHTML;
             if (x === '아메리카노') {
